@@ -4,6 +4,12 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-x1 sm:rounded-lg px-4 py-4">
+
+            <button wire:click="crear()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 my-3">Nuevo</button>
+            @if($modal)
+                @include('livewire.crear')
+            @endif
+
             <table class="table-fixed w-full">
                 <thead>
                     <tr class="bg-red-600 text-white">
