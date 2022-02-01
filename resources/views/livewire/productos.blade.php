@@ -5,6 +5,16 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-x1 sm:rounded-lg px-4 py-4">
 
+            @if(session()->has('mensage'))
+                <div class="bg-teal-100 rounded-b text-teal-900 px-4 py-4 shadow-md my-3" role="alert">
+                    <div class="flex">
+                        <div>
+                            <h4>{{session('mensage')}}</h4>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <button wire:click="crear()" class="bg-green-500 hover:bg-green-600 rounded text-white font-bold py-2 px-4 my-3">Nuevo</button>
             @if($modal)
                 @include('livewire.crear')

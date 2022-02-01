@@ -22,6 +22,7 @@ class Productos extends Component
     
     public function cerrarModal() {
         $this->modal = false;
+        $this->limpiar();
     }
     
     public function limpiar() {
@@ -31,18 +32,39 @@ class Productos extends Component
     }
     
     public function guardar(){
-        $newProducto = new Producto();
-        $newProducto->descripcion = $this->descripcion;
-        $newProducto->cantidad = $this->cantidad;
-        $newProducto->save();
-        $this->limpiar();
+
+        /* if($this->id_producto == null){
+            $newProducto = new Producto();
+            $newProducto->descripcion = $this->descripcion;
+            $newProducto->cantidad = $this->cantidad;
+            $newProducto->save();
+            $this->cerrarModal();
+        }else{
+            $producto = Producto::findOrFail($this->id_producto);
+            $producto->descripcion = $this->descripcion;
+            $producto->cantidad = $this->cantidad;
+            $producto->save();
+            $this->cerrarModal();
+        } */
+
+        Producto::updateOrCreate(['id'=>$this->id_producto],['descripcion' => $this->descripcion, 'cantidad' => $this->cantidad]);
+        session()->flash('mensage', $this->id_producto ? '!Usuarios Actualizado con Exitosa':'Usuario Creado Correctamente');
         $this->cerrarModal();
-        $this->productos = Producto::all();
     }
     
-    public function editar() {}
+    public function editar($id) {
+        $producto = Producto::findOrFail($id);
+        $this->abrirModal();
+        $this->id_producto = $producto->id;
+        $this->descripcion = $producto->descripcion;
+        $this->cantidad = $producto->cantidad;
 
-    public function eliminar() {}
+    }
+
+    public function eliminar($id) {
+        $producto = Producto::findOrFail($id)->delete();
+        session()->flash('mensage','Mensaje Eliminado Correctamenet');
+    }
 
     public function render()
     {
